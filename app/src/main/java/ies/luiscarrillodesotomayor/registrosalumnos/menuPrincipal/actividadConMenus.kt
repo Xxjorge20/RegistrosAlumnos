@@ -12,6 +12,7 @@ import ies.luiscarrillodesotomayor.registrosalumnos.UpdateActivity
 
 open class actividadConMenus: AppCompatActivity() {
 
+    // Indice de la actividad
     companion object{
         var actividadActual = 0;
     }
@@ -26,6 +27,7 @@ open class actividadConMenus: AppCompatActivity() {
         return true
     }
 
+    // Función que se ejecuta al pulsar un elemento del menú
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId){
             R.id.anadir_alumno ->{
@@ -38,14 +40,14 @@ open class actividadConMenus: AppCompatActivity() {
             R.id.eliminar_alumno ->{
                 val intent = Intent(this, DeleteActivity::class.java) //nombre de la actividad
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                actividadActual = 1;
+                actividadActual = 2;
                 startActivity(intent)
                 true
             }
             R.id.actualizar_alumno ->{
                 val intent = Intent(this, UpdateActivity::class.java) //nombre de la actividad
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                actividadActual = 2;
+                actividadActual = 1;
                 startActivity(intent)
                 true
             }

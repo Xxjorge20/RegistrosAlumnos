@@ -5,10 +5,11 @@ import ies.luiscarrillodesotomayor.registrosalumnos.menuPrincipal.actividadConMe
 
 class UpdateActivity :actividadConMenus() {
 
-    private val binding = UpdateActivityBinding.inflate(layoutInflater)
+    private lateinit var binding : UpdateActivityBinding
 
     override fun onCreate(savedInstanceState: android.os.Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = UpdateActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
     }
 }

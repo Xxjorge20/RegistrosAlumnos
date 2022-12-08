@@ -6,6 +6,7 @@ import ies.luiscarrillodesotomayor.registroalumno.BDAlumnos.Alumno
 import ies.luiscarrillodesotomayor.registroalumno.BDAlumnos.AlumnoDAO
 import ies.luiscarrillodesotomayor.registroalumno.BDAlumnos.ListaAlumnosAPP
 
+// Base de datos
 @Database(
     entities = arrayOf(Alumno::class),
     version = 1

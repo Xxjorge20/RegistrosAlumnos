@@ -31,19 +31,32 @@ class MainActivity : actividadConMenus()
         bindingMain = ActivityMainBinding.inflate(layoutInflater)
         setContentView(bindingMain.root)
 
-
+        // Inicializamos la lista de alumnos
         listaAlumnos = ArrayList()
-        getTodosAlumnos()
+        // obtenemos la lista de alumnos de la base de datos
 
+        //              //
+        //      ERROR   //
+        //              //
 
+        // getTodosAlumnos() Si descomento esto peta el programa
+
+        // Evento click del botón añadir alumno
         bindingMain.BanadirAlumno.setOnClickListener {
+            // Obtenemos los datos del alumno
            var nombreAlumno = bindingMain.TBNombre.text.toString()
            var apellidosAlumno = bindingMain.TBApellidos.text.toString()
            var curso = bindingMain.TBCurso.text.toString()
 
+            // Supuestas validaciones de que no estén vacíos ?????
+
+
+            // cargo los datos del alumno en un objeto de la clase Alumno
             var alumno = Alumno(nombre = nombreAlumno, apellidos = apellidosAlumno, curso = curso)
 
+            // añado el alumno a la base de datos
             anadirAlumno(alumno)
+            // muestro un mensaje de que se ha añadido el alumno
             Toast.makeText(this, "Alumno añadido", Toast.LENGTH_SHORT).show()
         }
 
@@ -88,6 +101,7 @@ class MainActivity : actividadConMenus()
         inputMethodManager.hideSoftInputFromWindow(bindingMain.TBCurso.windowToken, 0)
     }
 
+    // Obtenemos todos los alumnos de la base de datos
     fun getTodosAlumnos(){
         CoroutineScope(Dispatchers.IO).launch {
             listaAlumnos = database.alumnoDAO().getAllAlumnos()

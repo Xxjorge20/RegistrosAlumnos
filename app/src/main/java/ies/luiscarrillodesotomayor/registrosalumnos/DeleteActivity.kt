@@ -17,10 +17,11 @@ import kotlinx.coroutines.launch
 
 class DeleteActivity: actividadConMenus() {
 
-    private val binding = DeleteActivityBinding.inflate(layoutInflater)
+    private lateinit var binding : DeleteActivityBinding
 
     override fun onCreate(savedInstanceState: android.os.Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = DeleteActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
     }
 }
