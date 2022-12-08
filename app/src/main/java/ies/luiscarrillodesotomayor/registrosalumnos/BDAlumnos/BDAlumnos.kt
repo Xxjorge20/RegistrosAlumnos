@@ -11,6 +11,6 @@ import ies.luiscarrillodesotomayor.registroalumno.BDAlumnos.ListaAlumnosAPP
     version = 1
 )
 
-abstract class BDAlumnos : RoomDatabase() {
+abstract class BDAlumnos: RoomDatabase() {
     abstract fun alumnoDAO(): AlumnoDAO
 }

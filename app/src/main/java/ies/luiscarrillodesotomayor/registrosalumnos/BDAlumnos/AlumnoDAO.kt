@@ -10,7 +10,7 @@ interface AlumnoDAO {
     @Insert
     fun addAlumno(alumno: Alumno): Long
 
-    // Devuelve todos los alumnos de la base de datos
+    // Devuelve un alumno de la base de datos
     @Query
         ("SELECT * FROM alumnos where nombre like :nombre")
     fun getAlumno(nombre: Long): Alumno

@@ -37,6 +37,8 @@ android {
 }
 
 dependencies {
+    implementation 'com.google.firebase:firebase-crashlytics-buildtools:2.8.1'
+
 
     //Room:
     kapt "androidx.room:room-compiler:2.4.3"

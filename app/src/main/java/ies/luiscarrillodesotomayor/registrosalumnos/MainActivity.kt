@@ -6,15 +6,18 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import ies.luiscarrillodesotomayor.registroalumno.BDAlumnos.Alumno
 import ies.luiscarrillodesotomayor.registroalumno.BDAlumnos.ListaAlumnosAPP
+import ies.luiscarrillodesotomayor.registroalumno.BDAlumnos.ListaAlumnosAPP.Companion.database
 import ies.luiscarrillodesotomayor.registrosalumnos.databinding.ActivityMainBinding
 import ies.luiscarrillodesotomayor.registrosalumnos.menuPrincipal.actividadConMenus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+
 class MainActivity : actividadConMenus()
 {
-    var random = (0..100).random()
+
+
 
     // Declaramos el binding
     private lateinit var bindingMain : ActivityMainBinding
@@ -29,8 +32,9 @@ class MainActivity : actividadConMenus()
         setContentView(bindingMain.root)
 
 
-
         listaAlumnos = ArrayList()
+        getTodosAlumnos()
+
 
         bindingMain.BanadirAlumno.setOnClickListener {
            var nombreAlumno = bindingMain.TBNombre.text.toString()
@@ -84,7 +88,11 @@ class MainActivity : actividadConMenus()
         inputMethodManager.hideSoftInputFromWindow(bindingMain.TBCurso.windowToken, 0)
     }
 
-
+    fun getTodosAlumnos(){
+        CoroutineScope(Dispatchers.IO).launch {
+            listaAlumnos = database.alumnoDAO().getAllAlumnos()
+        }
+    }
 
 
 
