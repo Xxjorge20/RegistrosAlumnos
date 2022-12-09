@@ -8,7 +8,7 @@ import ies.luiscarrillodesotomayor.registroalumno.BDAlumnos.ListaAlumnosAPP
 
 // Base de datos
 @Database(
-    entities = arrayOf(Alumno::class),
+    entities = [Alumno::class],
     version = 1
 )
 

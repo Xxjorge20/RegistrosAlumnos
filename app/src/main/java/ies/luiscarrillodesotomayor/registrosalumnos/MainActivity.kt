@@ -39,7 +39,8 @@ class MainActivity : actividadConMenus()
         //      ERROR   //
         //              //
 
-        // getTodosAlumnos() Si descomento esto peta el programa
+
+        listaAlumnos = getTodosAlumnos()
 
         // Evento click del botón añadir alumno
         bindingMain.BanadirAlumno.setOnClickListener {
@@ -102,10 +103,11 @@ class MainActivity : actividadConMenus()
     }
 
     // Obtenemos todos los alumnos de la base de datos
-    fun getTodosAlumnos(){
+    fun getTodosAlumnos(): MutableList<Alumno> {
         CoroutineScope(Dispatchers.IO).launch {
             listaAlumnos = database.alumnoDAO().getAllAlumnos()
         }
+        return listaAlumnos
     }
 
 
