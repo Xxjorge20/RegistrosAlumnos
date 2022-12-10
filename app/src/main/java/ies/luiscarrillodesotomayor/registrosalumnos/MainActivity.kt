@@ -17,8 +17,6 @@ import kotlinx.coroutines.launch
 class MainActivity : actividadConMenus()
 {
 
-
-
     // Declaramos el binding
     private lateinit var bindingMain : ActivityMainBinding
 
@@ -33,14 +31,7 @@ class MainActivity : actividadConMenus()
 
         // Inicializamos la lista de alumnos
         listaAlumnos = ArrayList()
-        // obtenemos la lista de alumnos de la base de datos
 
-        //              //
-        //      ERROR   //
-        //              //
-
-
-        listaAlumnos = getTodosAlumnos()
 
         // Evento click del botón añadir alumno
         bindingMain.BanadirAlumno.setOnClickListener {
@@ -49,67 +40,53 @@ class MainActivity : actividadConMenus()
            var apellidosAlumno = bindingMain.TBApellidos.text.toString()
            var curso = bindingMain.TBCurso.text.toString()
 
-            // Supuestas validaciones de que no estén vacíos ?????
+            // Validaciones
 
+            if (nombreAlumno.isEmpty() || apellidosAlumno.isEmpty() || curso.isEmpty()) {
+                Toast.makeText(this, "No puede haber campos vacíos", Toast.LENGTH_SHORT).show()
+            } else {
 
-            // cargo los datos del alumno en un objeto de la clase Alumno
-            var alumno = Alumno(nombre = nombreAlumno, apellidos = apellidosAlumno, curso = curso)
+                // Creamos el alumno
+                var alumno = Alumno(nombre = nombreAlumno, apellidos = apellidosAlumno, curso = curso)
 
-            // añado el alumno a la base de datos
-            anadirAlumno(alumno)
-            // muestro un mensaje de que se ha añadido el alumno
-            Toast.makeText(this, "Alumno añadido", Toast.LENGTH_SHORT).show()
+                // Añadimos el alumno a la lista
+                listaAlumnos.add(alumno)
+                // Añadimos el alumno a la base de datos
+                anadirAlumno(alumno)
+                // muestro un mensaje de que se ha añadido el alumno
+                Toast.makeText(this, "Alumno añadido", Toast.LENGTH_SHORT).show()
+
+                // Limpiamos los campos
+                limpiarCampos()
+
+                // Cerramos el teclado
+                cerrarTeclado()
+
+            }
+
         }
-
 
     }
 
     fun anadirAlumno(alumno: Alumno) {
 
         CoroutineScope(Dispatchers.IO).launch {
-
-            val id = ListaAlumnosAPP.database.alumnoDAO().addAlumno(alumno)
-            val recuperarAlumno = ListaAlumnosAPP.database.alumnoDAO().getAlumno(id)
-
-            runOnUiThread{
-
-                listaAlumnos.add(recuperarAlumno)
-
-                    if (listaAlumnos.size >= 1) {
-                        Toast.makeText(this@MainActivity, "Alumno añadido", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(this@MainActivity, "Alumnos añadidos", Toast.LENGTH_SHORT).show()
-                    }
-                    // Se oculta el teclado
-                    hideKeyboard()
-                    // Se limpia el foco
-                    clearFocus()
-            }
+            database.alumnoDAO().addAlumno(alumno)
         }
     }
 
-
-    //Al pulsar sobre el boton añadir, se limpia
-    fun clearFocus(){
-        bindingMain.TBNombre.setText("")
-        bindingMain.TBApellidos.setText("")
-        bindingMain.TBCurso.setText("")
+    // Funcion para cerrar el teclado
+    fun cerrarTeclado() {
+        val imm = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(bindingMain.root.windowToken, 0)
     }
 
-    //Oculta el teclado cuando terminamos de escribir en el cuadro de texto
-    fun hideKeyboard() {
-        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(bindingMain.TBCurso.windowToken, 0)
+    // Funcion para limpiar los campos
+    fun limpiarCampos() {
+        bindingMain.TBNombre.text.clear()
+        bindingMain.TBApellidos.text.clear()
+        bindingMain.TBCurso.text.clear()
     }
-
-    // Obtenemos todos los alumnos de la base de datos
-    fun getTodosAlumnos(): MutableList<Alumno> {
-        CoroutineScope(Dispatchers.IO).launch {
-            listaAlumnos = database.alumnoDAO().getAllAlumnos()
-        }
-        return listaAlumnos
-    }
-
 
 
 }
